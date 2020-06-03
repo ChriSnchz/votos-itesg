@@ -1,49 +1,47 @@
 <template>
     <div class="container">
-        <div class="row">
-      <div class="col-md-12">
-        <div class="card">
-          <div class="card-header card-header-primary">
-            <h4 class="card-title ">Estadísticas</h4>
-            <p class="card-category">  Aquí puedes visualizar las Estadísticas</p>
-          </div>
-          <div class="card-body">
-            <div class="table-responsive">
-              <table class="table">
-                <thead class=" text-primary">
-                  <th>
-                    Descripción
-                  </th>
-                  <th>
-                    Candidatos
-                  </th>
-                  <th>
-                    Votos
-                  </th>
-
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>
-                      Presidente
-                    </td>
-                    <td>
-                      Karla Moreno<br>
-                      Cristobal Sanchez
-                    </td>
-                    <td>
-                      1<br>
-                      2
-                    </td>
-                  </tr>
-
-                </tbody>
-              </table>
+        <div class="row justify-content-center">
+            <div class="col-md-12">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header card-header-primary">
+                            <h4 class="card-title">Estadisticas</h4>
+                            <p class="card-category">
+                                Aquí puedes ver los resultados de las elecciones.
+                            </p>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead class="text-primary">
+                                        <th>Eleccion</th>
+                                        <th>Nombre</th>
+                                        <th>Votos</th>
+                                    </thead>
+                                    <tbody>
+                                        <tr v-for="candidato in candidatos">
+                                            <td>
+                                              {{
+                                              candidato.eleccion.descripcion
+                                              }}
+                                            </td>
+                                            <td>
+                                              {{ candidato.nombre }}
+                                              {{ candidato.apellido_paterno }}
+                                              {{ candidato.apellido_materno }}
+                                            </td>
+                                            <td>
+                                              {{candidato.total}}
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
-    </div>
     </div>
 </template>
 
@@ -51,20 +49,17 @@
 export default {
     data() {
         return {
-            elecciones: {}
+            candidatos: {}
         };
     },
     mounted() {
-        this.getElecciones();
+        this.getEleccion();
     },
     methods: {
-        getElecciones() {
-            var i,x;
-            this.elecciones = {};
-            axios.post(`/api/elecciones/getEstadistica`).then(response => {
-                this.elecciones = response.data;
-                this.candidatos = this.elecciones.candidatos;
-
+        getEleccion() {
+            this.candidatos = {};
+            axios.get(`/api/elecciones/getEstadistica`).then(response => {
+                this.candidatos = response.data;
             });
         }
     }

@@ -2635,26 +2635,22 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      elecciones: {}
+      candidatos: {}
     };
   },
   mounted: function mounted() {
-    this.getElecciones();
+    this.getEleccion();
   },
   methods: {
-    getElecciones: function getElecciones() {
+    getEleccion: function getEleccion() {
       var _this = this;
 
-      var i, x;
-      this.elecciones = {};
-      axios.post("/api/elecciones/getEstadistica").then(function (response) {
-        _this.elecciones = response.data;
-        _this.candidatos = _this.elecciones.candidatos;
+      this.candidatos = {};
+      axios.get("/api/elecciones/getEstadistica").then(function (response) {
+        _this.candidatos = response.data;
       });
     }
   }
@@ -41075,73 +41071,87 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "container" }, [
-      _c("div", { staticClass: "row" }, [
+  return _c("div", { staticClass: "container" }, [
+    _c("div", { staticClass: "row justify-content-center" }, [
+      _c("div", { staticClass: "col-md-12" }, [
         _c("div", { staticClass: "col-md-12" }, [
           _c("div", { staticClass: "card" }, [
-            _c("div", { staticClass: "card-header card-header-primary" }, [
-              _c("h4", { staticClass: "card-title " }, [
-                _vm._v("Estadísticas")
-              ]),
-              _vm._v(" "),
-              _c("p", { staticClass: "card-category" }, [
-                _vm._v("  Aquí puedes visualizar las Estadísticas")
-              ])
-            ]),
+            _vm._m(0),
             _vm._v(" "),
             _c("div", { staticClass: "card-body" }, [
               _c("div", { staticClass: "table-responsive" }, [
                 _c("table", { staticClass: "table" }, [
-                  _c("thead", { staticClass: " text-primary" }, [
-                    _c("th", [
-                      _vm._v("\n                Descripción\n              ")
-                    ]),
-                    _vm._v(" "),
-                    _c("th", [
-                      _vm._v("\n                Candidatos\n              ")
-                    ]),
-                    _vm._v(" "),
-                    _c("th", [
-                      _vm._v("\n                Votos\n              ")
-                    ])
-                  ]),
+                  _vm._m(1),
                   _vm._v(" "),
-                  _c("tbody", [
-                    _c("tr", [
-                      _c("td", [
-                        _vm._v(
-                          "\n                  Presidente\n                "
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("td", [
-                        _vm._v("\n                  Karla Moreno"),
-                        _c("br"),
-                        _vm._v(
-                          "\n                  Cristobal Sanchez\n                "
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("td", [
-                        _vm._v("\n                  1"),
-                        _c("br"),
-                        _vm._v("\n                  2\n                ")
+                  _c(
+                    "tbody",
+                    _vm._l(_vm.candidatos, function(candidato) {
+                      return _c("tr", [
+                        _c("td", [
+                          _vm._v(
+                            "\n                                          " +
+                              _vm._s(candidato.eleccion.descripcion) +
+                              "\n                                        "
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _vm._v(
+                            "\n                                          " +
+                              _vm._s(candidato.nombre) +
+                              "\n                                          " +
+                              _vm._s(candidato.apellido_paterno) +
+                              "\n                                          " +
+                              _vm._s(candidato.apellido_materno) +
+                              "\n                                        "
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _vm._v(
+                            "\n                                          " +
+                              _vm._s(candidato.total) +
+                              "\n                                        "
+                          )
+                        ])
                       ])
-                    ])
-                  ])
+                    }),
+                    0
+                  )
                 ])
               ])
             ])
           ])
         ])
       ])
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-header card-header-primary" }, [
+      _c("h4", { staticClass: "card-title" }, [_vm._v("Estadisticas")]),
+      _vm._v(" "),
+      _c("p", { staticClass: "card-category" }, [
+        _vm._v(
+          "\n                            Aquí puedes ver los resultados de las elecciones.\n                        "
+        )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", { staticClass: "text-primary" }, [
+      _c("th", [_vm._v("Eleccion")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Nombre")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Votos")])
     ])
   }
 ]

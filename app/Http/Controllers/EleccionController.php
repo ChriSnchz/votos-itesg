@@ -31,9 +31,16 @@ class EleccionController extends Controller
         return $eleccion;
     }
 
+    //public function getEstadistica(){
+
+        //return Eleccion::with('candidatos.votos')->get();
+
+    //}
+
     public function getEstadistica(){
-
-        return Eleccion::with('candidatos.votos')->get();
-
+        $data = Voto::with('candidato')
+        ->select('id_candidato', DB::raw('count(*) as total'))
+        ->groupBy('id_candidato')
+        ->get();
     }
 }

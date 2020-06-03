@@ -9,6 +9,6 @@ Route::group(['middleware'=> 'auth'], function () {
       Route::post('/create', 'EleccionController@create');
       Route::get('/getElecciones', 'EleccionController@index');
       Route::get('/{eleccion}', 'EleccionController@show');
-      Route::post('/getEstadistica', 'EleccionController@getEstadistica');
+      Route::get('/getEstadistica', 'EleccionController@getEstadistica');
     });
 });

@@ -20,4 +20,11 @@ class VotoController extends Controller
         $voto->save();
         return $voto;
     }
+
+    public function getVotes(){
+        $votes = DB::table('votos')
+        ->select('candidato_id', DB::raw('count(*) as total'))
+        ->groupBy('candidato_id')
+        ->get();
+    }
 }
