@@ -26,4 +26,9 @@ class Eleccion extends Model
         return $this->hasManyThrough(Voto::class,Candidato::class);
     }
 
+    public function candidato()
+    {
+        return $this->belongsTo(Candidato::class);
+    }
+
 }

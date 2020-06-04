@@ -2633,8 +2633,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2642,14 +2640,14 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   mounted: function mounted() {
-    this.getEleccion();
+    this.getEstadistica();
   },
   methods: {
-    getEleccion: function getEleccion() {
+    getEstadistica: function getEstadistica() {
       var _this = this;
 
       this.candidatos = {};
-      axios.get("/api/elecciones/getEstadistica").then(function (response) {
+      axios.post("/api/elecciones/getEstadistica").then(function (response) {
         _this.candidatos = response.data;
       });
     }
@@ -41086,12 +41084,20 @@ var render = function() {
                   _c(
                     "tbody",
                     _vm._l(_vm.candidatos, function(candidato) {
-                      return _c("tr", [
+                      return _c("tr", { key: candidato.id }, [
                         _c("td", [
                           _vm._v(
                             "\n                                          " +
-                              _vm._s(candidato.eleccion.descripcion) +
-                              "\n                                        "
+                              _vm._s(candidato.eleccion) +
+                              " (" +
+                              _vm._s(
+                                _vm._f("moment")(candidato.f_inicio, "D-M-Y")
+                              ) +
+                              " - " +
+                              _vm._s(
+                                _vm._f("moment")(candidato.f_fin, "D-M-Y")
+                              ) +
+                              ")\n                                        "
                           )
                         ]),
                         _vm._v(" "),
@@ -41110,7 +41116,7 @@ var render = function() {
                         _c("td", [
                           _vm._v(
                             "\n                                          " +
-                              _vm._s(candidato.total) +
+                              _vm._s(candidato.votos) +
                               "\n                                        "
                           )
                         ])

@@ -19,11 +19,9 @@
                                         <th>Votos</th>
                                     </thead>
                                     <tbody>
-                                        <tr v-for="candidato in candidatos">
+                                        <tr v-for="candidato in candidatos" :key="candidato.id">
                                             <td>
-                                              {{
-                                              candidato.eleccion.descripcion
-                                              }}
+                                              {{candidato.eleccion}} ({{candidato.f_inicio | moment("D-M-Y")}} - {{candidato.f_fin | moment("D-M-Y")}})
                                             </td>
                                             <td>
                                               {{ candidato.nombre }}
@@ -31,7 +29,7 @@
                                               {{ candidato.apellido_materno }}
                                             </td>
                                             <td>
-                                              {{candidato.total}}
+                                              {{candidato.votos}}
                                             </td>
                                         </tr>
                                     </tbody>
@@ -53,12 +51,12 @@ export default {
         };
     },
     mounted() {
-        this.getEleccion();
+        this.getEstadistica();
     },
     methods: {
-        getEleccion() {
+        getEstadistica() {
             this.candidatos = {};
-            axios.get(`/api/elecciones/getEstadistica`).then(response => {
+            axios.post(`/api/elecciones/getEstadistica`).then(response => {
                 this.candidatos = response.data;
             });
         }

@@ -13,6 +13,6 @@ class Voto extends Model
 
     public function candidato()
     {
-        return $this->belongsTo('App\Candidato', 'id_candidato');
+        return $this->belongsTo(Candidato::class);
     }
 }

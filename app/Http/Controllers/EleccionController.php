@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Eleccion;
 use App\Candidato;
+use App\Voto;
+use DB;
 
 
 class EleccionController extends Controller
@@ -34,13 +36,28 @@ class EleccionController extends Controller
     //public function getEstadistica(){
 
         //return Eleccion::with('candidatos.votos')->get();
-
     //}
 
     public function getEstadistica(){
-        $data = Voto::with('candidato')
-        ->select('id_candidato', DB::raw('count(*) as total'))
-        ->groupBy('id_candidato')
-        ->get();
+
+        $candidatos = DB::table('votos')
+            ->select(DB::raw('count(votos.user_id) as votos, candidatos.nombre, candidatos.apellido_paterno, candidatos.apellido_materno,eleccions.descripcion as eleccion,eleccions.fecha_inicio as f_inicio,eleccions.fecha_fin as f_fin'))
+            ->Join('candidatos', 'candidatos.id', '=', 'votos.candidato_id')
+            ->Join('eleccions', 'eleccions.id', '=', 'candidatos.eleccion_id')
+            ->groupBy('votos.candidato_id')
+            ->get();
+
+        return $candidatos;
+       /* $sql=DB::table('votos')
+            ->Join('candidatos', 'candidatos.id', '=', 'votos.candidato_id')
+            ->Join('users', 'users.id', '=', 'votos.user_id')
+            ->get();
+        return $sql;*/
+        //return Voto::with('candidato')->get();
+
+        /*
+        ->select('candidato_id', DB::raw('count(*) as total'))
+        ->groupBy('candidato_id')
+        ->get();*/
     }
 }
